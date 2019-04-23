@@ -1,1 +1,1 @@
-a tiny script language interpreter.
+The tiny script language interpreter.
