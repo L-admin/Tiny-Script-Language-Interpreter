@@ -5,6 +5,9 @@
 #ifndef SPARROW_COMMON_H
 #define SPARROW_COMMON_H
 
+typedef struct vm VM;
+typedef struct parser Parser;
+
 #define bool char
 #define true   1
 #define false  0
