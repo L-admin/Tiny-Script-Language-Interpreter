@@ -8,7 +8,27 @@
 #include <stdint.h>
 #include "common.h"
 
-typedef enum {
+
+typedef uint8_t Byte;
+
+typedef struct
+{
+    Byte *datas;         // 数据缓冲区
+    uint32_t count;         // 缓冲区中已使用的元素个数
+    uint32_t capacity;      // 缓冲区容量用
+} ByteBuffer;
+
+void ByteBufferInit(ByteBuffer *buf);
+
+void ByteBufferFillWrite(VM *vm, ByteBuffer *buf, Byte data, uint32_t fillCount);
+
+void ByteBufferAdd(VM *vm, ByteBuffer *buf, Byte data);
+
+void ByteBufferClear(VM *vm, ByteBuffer *buf);
+
+
+typedef enum
+{
     TOKEN_UNKNOWN,
 
     // 数据类型
@@ -42,73 +62,83 @@ typedef enum {
     // 分隔符
     TOKEN_COMMA,            // ,
     TOKEN_COLON,            // :
-    TOKEN_LEFT_PAREN,	    // (
-    TOKEN_RIGHT_PAREN,	    // )
-    TOKEN_LEFT_BRACKET,	    // [
-    TOKEN_RIGHT_BRACKET,	// ]
-    TOKEN_LEFT_BRACE,	    // {
-    TOKEN_RIGHT_BRACE,	    // }
-    TOKEN_DOT,		        // .
-    TOKEN_DOT_DOT,	        // ..
+    TOKEN_LEFT_PAREN,       // (
+    TOKEN_RIGHT_PAREN,      // )
+    TOKEN_LEFT_BRACKET,     // [
+    TOKEN_RIGHT_BRACKET,    // ]
+    TOKEN_LEFT_BRACE,       // {
+    TOKEN_RIGHT_BRACE,      // }
+    TOKEN_DOT,              // .
+    TOKEN_DOT_DOT,          // ..
 
     // 简单双目运算符
-    TOKEN_ADD,		        // +
-    TOKEN_SUB,		        // -
-    TOKEN_MUL,		        // *
-    TOKEN_DIV,		        // /
-    TOKEN_MOD,		        // %
+    TOKEN_ADD,              // +
+    TOKEN_SUB,              // -
+    TOKEN_MUL,              // *
+    TOKEN_DIV,              // /
+    TOKEN_MOD,              // %
 
     // 赋值运算符
-    TOKEN_ASSIGN,	        // =
+    TOKEN_ASSIGN,           // =
 
     // 位运算符
-     TOKEN_BIT_AND,	        // &
-    TOKEN_BIT_OR,	        // |
-    TOKEN_BIT_NOT,	        // ~
+    TOKEN_BIT_AND,          // &
+    TOKEN_BIT_OR,           // |
+    TOKEN_BIT_NOT,          // ~
     TOKEN_BIT_SHIFT_RIGHT,  // >>
     TOKEN_BIT_SHIFT_LEFT,   // <<
 
     // 逻辑运算符
-    TOKEN_LOGIC_AND,	    // &&
-    TOKEN_LOGIC_OR,	        // ||
-    TOKEN_LOGIC_NOT,	    // !
+    TOKEN_LOGIC_AND,        // &&
+    TOKEN_LOGIC_OR,         // ||
+    TOKEN_LOGIC_NOT,        // !
 
     // 关系操作符
-    TOKEN_EQUAL,		    // ==
-    TOKEN_NOT_EQUAL,	    // !=
-    TOKEN_GREATE,	        // >
-    TOKEN_GREATE_EQUAL,	    // >=
-    TOKEN_LESS,		        // <
-    TOKEN_LESS_EQUAL,	    // <=
+    TOKEN_EQUAL,            // ==
+    TOKEN_NOT_EQUAL,        // !=
+    TOKEN_GREATE,           // >
+    TOKEN_GREATE_EQUAL,     // >=
+    TOKEN_LESS,             // <
+    TOKEN_LESS_EQUAL,       // <=
 
-    TOKEN_QUESTION,	        // ?
+    TOKEN_QUESTION,         // ?
 
     // 文件结束标记
-    TOKEN_EOF		        // EOF
+    TOKEN_EOF               // EOF
 } TokenType;
 
-typedef struct {
+
+typedef struct
+{
     TokenType type;
-    const char* start;
+    const char *start;
     uint32_t length;
     uint32_t lineNo;
 } Token;
 
-struct parser {
-    const char* file;
-    const char* sourceCode;     // sourceCode可能为文件内容或者字符串
+
+struct parser
+{
+    const char *file;
+    const char *sourceCode;     // sourceCode可能为文件内容或者字符串
 
     char curChar;
-    const char* nextCharPtr;
+    const char *nextCharPtr;
 
     Token preToken;
     Token curToken;
 
     int interpolationExpectRightParenNum;   // 处于内嵌表达式之中时,期望的右括号数量(跟踪小括号对儿的嵌套)
 
-    struct parser* parent;      // 指向父parser
+    struct parser *parent;      // 指向父parser
 
-    VM* vm;
+    VM *vm;
 };
+
+
+void getNextToken(Parser *parser);
+
+void initParser(VM *vm, Parser *parser, const char *file, const char *sourceCode);
+
 
 #endif //SPARROW_PARSER_H
