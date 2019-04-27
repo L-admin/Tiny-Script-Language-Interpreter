@@ -11,6 +11,7 @@
 void initVM(VM* vm)
 {
     vm->curParser = NULL;
+    vm->allocatedBytes = 0;
 }
 
 VM* newVM(void)

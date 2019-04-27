@@ -6,9 +6,11 @@
 #define SPARROW_VM_H
 
 #include "common.h"
+#include <stdint.h>
 
 struct vm {
-    Parser* curParser;          // 当前词法分析器
+    Parser*     curParser;          // 当前词法分析器
+    uint32_t    allocatedBytes;     // 累计已分配的内存大小
 };
 
 void initVM(VM* vm);
