@@ -8,15 +8,15 @@
 #include "vm.h"
 
 
-void initVM(VM* vm)
+void initVM(VM *vm)
 {
     vm->curParser = NULL;
     vm->allocatedBytes = 0;
 }
 
-VM* newVM(void)
+VM *newVM(void)
 {
-    VM* vm = malloc(sizeof(VM));
+    VM *vm = malloc(sizeof(VM));
     if (vm == NULL)
     {
         MEM_ERROR("allocate VM failed!");

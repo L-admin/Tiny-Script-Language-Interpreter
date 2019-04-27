@@ -12,7 +12,7 @@
 uint32_t ceilToPowerOf2(uint32_t v);
 
 
-void* memManager(VM* vm, void* ptr, uint32_t oldSize, uint32_t newSize);
+void *memManager(VM *vm, void *ptr, uint32_t oldSize, uint32_t newSize);
 
 // 分配类型为type的内存块
 #define ALLOCATE(vmPtr, type) \
@@ -37,14 +37,15 @@ void* memManager(VM* vm, void* ptr, uint32_t oldSize, uint32_t newSize);
 #define DEFAULT_BUFFER_SIZE 512
 
 
-typedef enum {
+typedef enum
+{
     ERROR_IO,
     ERROR_MEM,
     ERROR_LEX,
     ERROR_COMPILE,
 } ErrorType;
 
-void errorReport(void* parser, ErrorType errorType, const char* fmt, ...);
+void errorReport(void *parser, ErrorType errorType, const char *fmt, ...);
 
 #define IO_ERROR(...)\
     errorReport(NULL, ERROR_IO, __VA_ARGS__)

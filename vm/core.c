@@ -8,11 +8,11 @@
 #include "core.h"
 #include "utils.h"
 
-char* rootDir = NULL;
+char *rootDir = NULL;
 
-char* readFile(const char * path)
+char *readFile(const char *path)
 {
-    FILE* file = fopen(path, "rb"); // r 和 rb 区别
+    FILE *file = fopen(path, "rb"); // r 和 rb 区别
     if (file == NULL)
     {
         IO_ERROR("Could`t open file \"%s\".\n", path);
@@ -20,9 +20,9 @@ char* readFile(const char * path)
 
     struct stat fileStat;
     stat(path, &fileStat);
-    size_t fileSize = (size_t)fileStat.st_size;
+    size_t fileSize = (size_t) fileStat.st_size;
 
-    char* fileContent = (char*)malloc(fileSize + 1);
+    char *fileContent = (char *) malloc(fileSize + 1);
     if (fileContent == NULL)
     {
         MEM_ERROR("Could`t allocate memory for reading file \"%s\".\n", path);

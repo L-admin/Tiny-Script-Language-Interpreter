@@ -24,11 +24,11 @@ uint32_t ceilToPowerOf2(uint32_t v)
     return v;
 }
 
-//内存管理三种功能:
+// 内存管理三种功能:
 //   1 申请内存
 //   2 修改空间大小
 //   3 释放内存
-void* memManager(VM* vm, void* ptr, uint32_t oldSize, uint32_t newSize)
+void *memManager(VM *vm, void *ptr, uint32_t oldSize, uint32_t newSize)
 {
     // 累计系统分配的总内存
     vm->allocatedBytes += newSize - oldSize;
@@ -49,7 +49,7 @@ void* memManager(VM* vm, void* ptr, uint32_t oldSize, uint32_t newSize)
 
 
 // 通用报错函数
-void errorReport(void* parser, ErrorType errorType, const char* fmt, ...)
+void errorReport(void *parser, ErrorType errorType, const char *fmt, ...)
 {
     char buffer[DEFAULT_BUFFER_SIZE] = {'\0'};
     va_list ap;
@@ -66,7 +66,7 @@ void errorReport(void* parser, ErrorType errorType, const char* fmt, ...)
         case ERROR_LEX:
         case ERROR_COMPILE:
             ASSERT(parser != NULL, "parser is null!");
-            fprintf(stderr, "%s:%d \"%s\"\n", ((Parser*)parser)->file, ((Parser*)parser)->preToken.lineNo, buffer);
+            fprintf(stderr, "%s:%d \"%s\"\n", ((Parser *) parser)->file, ((Parser *) parser)->preToken.lineNo, buffer);
             break;
         default:
             NOT_REACHED();
