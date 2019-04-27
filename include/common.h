@@ -5,6 +5,10 @@
 #ifndef SPARROW_COMMON_H
 #define SPARROW_COMMON_H
 
+#ifdef DEBUG
+    #include <stdio.h>
+#endif
+
 typedef struct vm VM;
 typedef struct parser Parser;
 
