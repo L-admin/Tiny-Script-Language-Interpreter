@@ -40,7 +40,8 @@ void* memManager(VM* vm, void* ptr, uint32_t oldSize, uint32_t newSize);
 typedef enum {
     ERROR_IO,
     ERROR_MEM,
-    ERROR_LEX
+    ERROR_LEX,
+    ERROR_COMPILE,
 } ErrorType;
 
 void errorReport(void* parser, ErrorType errorType, const char* fmt, ...);
@@ -53,5 +54,8 @@ void errorReport(void* parser, ErrorType errorType, const char* fmt, ...);
 
 #define LEX_ERROR(parser, ...)\
    errorReport(parser, ERROR_LEX, __VA_ARGS__)
+
+#define COMPILE_ERROR(parser, ...)\
+   errorReport(parser, ERROR_COMPILE, __VA_ARGS__)
 
 #endif //SPARROW_UTILS_H

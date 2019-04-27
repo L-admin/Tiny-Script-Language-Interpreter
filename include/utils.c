@@ -64,8 +64,10 @@ void errorReport(void* parser, ErrorType errorType, const char* fmt, ...)
             fprintf(stderr, "%s:%d In function %s():%s\n", __FILE__, __LINE__, __func__, buffer);
             break;
         case ERROR_LEX:
+        case ERROR_COMPILE:
             ASSERT(parser != NULL, "parser is null!");
             fprintf(stderr, "%s:%d \"%s\"\n", ((Parser*)parser)->file, ((Parser*)parser)->preToken.lineNo, buffer);
+            break;
         default:
             NOT_REACHED();
     }
