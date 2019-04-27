@@ -12,9 +12,10 @@ void initVM(VM *vm)
 {
     vm->curParser = NULL;
     vm->allocatedBytes = 0;
+    vm->allObjects = NULL;
 }
 
-VM *newVM(void)
+VM *newVM()
 {
     VM *vm = malloc(sizeof(VM));
     if (vm == NULL)

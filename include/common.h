@@ -11,6 +11,7 @@
 
 typedef struct vm VM;
 typedef struct parser Parser;
+typedef struct class Class;
 
 #define bool char
 #define true   1
