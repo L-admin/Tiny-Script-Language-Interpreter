@@ -58,9 +58,9 @@ typedef struct
 
 typedef struct
 {
-    Value       *datas;            // 数据缓冲区
-    uint32_t    count;             // 缓冲区已经使用的元素个数
-    uint32_t    capacity;          // 缓冲区容量
+    Value *datas;               // 数据缓冲区
+    uint32_t count;             // 缓冲区已经使用的元素个数
+    uint32_t capacity;          // 缓冲区容量
 } ValueBuffer;
 
 void ValueBufferInit(ValueBuffer *buf);
