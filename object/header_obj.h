@@ -10,7 +10,7 @@
 
 typedef enum
 {
-    OT_CLASS,           // class
+    OT_CLASS,           // class,以下都是object类型
     OT_LIST,            // list
     OT_MAP,             // map
     OT_MODULE,          // module
@@ -27,10 +27,10 @@ typedef enum
 // 对象头
 typedef struct objHeader
 {
-    ObjType type;
-    bool isDark;
-    Class *class;
-    struct objHeader *next;
+    ObjType type;               // 对象类型
+    bool isDark;                // 对象是否可达
+    Class *class;               // 对象所属的类
+    struct objHeader *next;     // 用于链接所有已经分配的对象
 } ObjHeader;
 
 
