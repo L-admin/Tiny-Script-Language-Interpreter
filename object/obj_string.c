@@ -3,6 +3,7 @@
 //
 
 #include <string.h>
+#include "vm.h"
 #include "utils.h"
 #include "obj_string.h"
 

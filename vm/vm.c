@@ -13,6 +13,7 @@ void initVM(VM *vm)
     vm->curParser = NULL;
     vm->allocatedBytes = 0;
     vm->allObjects = NULL;
+    vm->stringClass = NULL;
 }
 
 VM *newVM()
