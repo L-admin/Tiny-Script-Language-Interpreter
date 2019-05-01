@@ -1,5 +1,5 @@
 CC = gcc
-LIB = -I include -I cli -I vm -I parser object
+LIB = -I include -I cli -I vm -I parser -I object
 CFLAGS = -g -DDEBUG -lm -Wall -std=c99 -W -Wstrict-prototypes -Wmissing-prototypes -Wsystem-headers ${LIB}
 TARGET = spr
 DIRS = include cli vm parser object
