@@ -74,3 +74,45 @@ void errorReport(void *parser, ErrorType errorType, const char *fmt, ...)
 
     exit(1);
 }
+
+
+
+void ByteBufferInit(ByteBuffer *buf)
+{
+    buf->datas = NULL;
+    buf->count = 0;
+    buf->capacity = 0;
+}
+
+void ByteBufferFillWrite(VM *vm, ByteBuffer *buf, Byte data, uint32_t fillCount)
+{
+    uint32_t newCounts = buf->count + fillCount;
+    if (newCounts > buf->capacity)
+    {
+        size_t oldSize = buf->capacity * sizeof(Byte);
+
+        buf->capacity = ceilToPowerOf2(newCounts);
+        size_t newSize = buf->capacity * sizeof(Byte);
+        ASSERT(newSize > oldSize, "faint...memory allocate!");
+
+        buf->datas = (Byte *) memManager(vm, buf->datas, oldSize, newSize);
+    }
+
+    for (uint32_t cnt = 0; cnt < fillCount; cnt++)
+    {
+        buf->datas[buf->count] = data;
+        buf->count++;
+    }
+}
+
+void ByteBufferAdd(VM *vm, ByteBuffer *buf, Byte data)
+{
+    ByteBufferFillWrite(vm, buf, data, 1);
+}
+
+void ByteBufferClear(VM *vm, ByteBuffer *buf)
+{
+    size_t oldSize = buf->capacity * sizeof(buf->datas[0]);
+    memManager(vm, buf->datas, oldSize, 0);
+    ByteBufferInit(buf);
+}

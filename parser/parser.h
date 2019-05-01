@@ -9,24 +9,6 @@
 #include "common.h"
 
 
-typedef uint8_t Byte;
-
-typedef struct
-{
-    Byte *datas;         // 数据缓冲区
-    uint32_t count;         // 缓冲区中已使用的元素个数
-    uint32_t capacity;      // 缓冲区容量用
-} ByteBuffer;
-
-void ByteBufferInit(ByteBuffer *buf);
-
-void ByteBufferFillWrite(VM *vm, ByteBuffer *buf, Byte data, uint32_t fillCount);
-
-void ByteBufferAdd(VM *vm, ByteBuffer *buf, Byte data);
-
-void ByteBufferClear(VM *vm, ByteBuffer *buf);
-
-
 typedef enum
 {
     TOKEN_UNKNOWN,
