@@ -5,7 +5,6 @@
 #include "obj_list.h"
 #include "utils.h"
 #include "vm.h"
-#include <stdint.h>
 
 
 static void shrinkList(VM* vm, ObjList* objList, uint32_t newCapacity);
