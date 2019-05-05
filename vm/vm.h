@@ -17,6 +17,7 @@ struct vm
     ObjHeader *allObjects;          // 跟踪已经分配对象的链表
     Class* stringClass;
     Class* listClass;
+    Class* rangeClass;
 };
 
 void initVM(VM *vm);
