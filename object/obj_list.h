@@ -8,7 +8,7 @@
 #include "header_obj.h"
 
 
-#define CAPACITY_GROW_FACTOR 4
+#define LIST_CAPACITY_GROW_FACTOR 4
 
 // list对象
 typedef struct

@@ -60,7 +60,7 @@ Value removeElement(VM *vm, ObjList *objList, uint32_t index)
     }
 
     // 容量利用率过低就减小容量
-    uint32_t _capacity = objList->elements.capacity / CAPACITY_GROW_FACTOR;
+    uint32_t _capacity = objList->elements.capacity / LIST_CAPACITY_GROW_FACTOR;
     if (_capacity > objList->elements.count)
     {
         shrinkList(vm, objList, _capacity);
