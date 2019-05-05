@@ -4,7 +4,7 @@
 
 #include "obj_list.h"
 #include "utils.h"
-#include "class.h"
+#include "vm.h"
 #include <stdint.h>
 
 
@@ -38,7 +38,7 @@ void insertElement(VM *vm, ObjList *objList, uint32_t index, Value value)
     }
 
     // 准备一个Value空间以容纳新元素产生的空间波动
-    ValueBufferAdd(vm, &objList->elements, VT_TO_VALUE(VT_NULL));
+    ValueBufferAdd(vm, &objList->elements, (Value){VT_NULL, 0});
 
     // 使index后面的整体后移一位
     for (uint32_t idx = objList->elements.count - 1; idx > index; idx--)
