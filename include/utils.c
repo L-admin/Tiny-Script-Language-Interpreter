@@ -68,13 +68,14 @@ void errorReport(void *parser, ErrorType errorType, const char *fmt, ...)
             ASSERT(parser != NULL, "parser is null!");
             fprintf(stderr, "%s:%d \"%s\"\n", ((Parser *) parser)->file, ((Parser *) parser)->preToken.lineNo, buffer);
             break;
+        case ERROR_RUNTIME:
+            fprintf(stderr, "%s\n", buffer);
         default:
             NOT_REACHED();
     }
 
     exit(1);
 }
-
 
 
 void ByteBufferInit(ByteBuffer *buf)

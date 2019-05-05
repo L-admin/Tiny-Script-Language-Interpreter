@@ -43,6 +43,7 @@ typedef enum
     ERROR_MEM,
     ERROR_LEX,
     ERROR_COMPILE,
+    ERROR_RUNTIME
 } ErrorType;
 
 void errorReport(void *parser, ErrorType errorType, const char *fmt, ...);
@@ -58,6 +59,9 @@ void errorReport(void *parser, ErrorType errorType, const char *fmt, ...);
 
 #define COMPILE_ERROR(parser, ...)\
    errorReport(parser, ERROR_COMPILE, __VA_ARGS__)
+
+#define RUN_ERROR(...)\
+   errorReport(NULL, ERROR_RUNTIME, __VA_ARGS__)
 
 
 typedef uint8_t Byte;

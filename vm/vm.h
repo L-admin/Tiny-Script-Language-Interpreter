@@ -16,6 +16,7 @@ struct vm
     uint32_t allocatedBytes;        // 累计已分配的内存大小
     ObjHeader *allObjects;          // 跟踪已经分配对象的链表
     Class* stringClass;
+    Class* listClass;
 };
 
 void initVM(VM *vm);
