@@ -19,6 +19,7 @@ struct vm
     Class* listClass;
     Class* rangeClass;
     Class* fnClass;
+    Class* mapClass;
 };
 
 void initVM(VM *vm);
