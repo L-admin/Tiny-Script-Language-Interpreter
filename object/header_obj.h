@@ -76,6 +76,7 @@ typedef struct
 #define VALUE_IS_NUM(value) ((value).type == VT_NUM)
 #define VALUE_IS_OBJ(value) ((value).type == VT_OBJ)
 
+#define VALUE_TO_OBJ(value) (value.objHeader)
 
 typedef struct
 {

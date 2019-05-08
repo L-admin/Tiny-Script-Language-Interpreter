@@ -15,6 +15,7 @@ void initVM(VM *vm)
     vm->allocatedBytes = 0;
     vm->allObjects = NULL;
     vm->allModules = newObjMap(vm);
+    StringBufferInit(&vm->allMethodNames);
 }
 
 VM *newVM()

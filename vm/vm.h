@@ -7,6 +7,7 @@
 
 #include "common.h"
 #include <stdint.h>
+#include "meta_obj.h"
 #include "obj_map.h"
 #include "header_obj.h"
 
@@ -26,10 +27,14 @@ struct vm
     Class *fnClass;
     Class *mapClass;
     Class *threadClass;
+    Class* nullClass;
+    Class* boolClass;
+    Class* numClass;
     Parser *curParser;              // 当前词法分析器
     uint32_t allocatedBytes;        // 累计已分配的内存大小
     ObjHeader *allObjects;          // 跟踪已经分配对象的链表
     ObjMap* allModules;             // 记录所有的模块
+    SymbolTable allMethodNames;     // (所有)类的方法名
 };
 
 void initVM(VM *vm);
