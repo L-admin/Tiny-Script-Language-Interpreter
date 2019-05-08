@@ -20,6 +20,7 @@ struct vm
     Class* rangeClass;
     Class* fnClass;
     Class* mapClass;
+    Class* threadClass;
 };
 
 void initVM(VM *vm);
