@@ -30,7 +30,6 @@ typedef struct
     {
         Primitive primFn;   // 指向脚本方法所关联的c实现
         ObjClosure *obj;    // 指向脚本代码编译后的ObjClosure或ObjFn
-
     };
 } Method;
 

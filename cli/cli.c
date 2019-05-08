@@ -33,7 +33,8 @@ static void runFile(const char *path)
     struct parser parser;
     initParser(vm, &parser, path, sourceCode);
 
-    #include "token.list"
+#include "token.list"
+
     while (parser.curToken.type != TOKEN_EOF)
     {
         getNextToken(&parser);
@@ -50,8 +51,10 @@ static void runFile(const char *path)
 int main(int argc, char **argv)
 {
     if (argc == 1)
-    { ;
-    } else
+    {
+        ;
+    }
+    else
     {
         runFile(argv[1]);
     }
