@@ -33,7 +33,7 @@ typedef struct objHeader
     struct objHeader *next;     // 用于链接所有已经分配的对象
 } ObjHeader;
 
-
+// value类型
 typedef enum
 {
     VT_UNDEFINED,
@@ -42,7 +42,7 @@ typedef enum
     VT_TRUE,
     VT_NUM,
     VT_OBJ          // 值为对象,指向对象头
-} ValueType;        // value类型
+} ValueType;
 
 // 通用的值结构
 typedef struct
