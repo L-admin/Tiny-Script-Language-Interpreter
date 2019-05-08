@@ -6,10 +6,6 @@
 #include <string.h>
 #include "core.h"
 
-#if DEBUG
-#include "debug.h"
-#endif
-
 // 编译单元
 struct compileUnit
 {
