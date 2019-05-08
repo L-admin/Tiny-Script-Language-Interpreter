@@ -44,14 +44,49 @@ char *readFile(const char *path)
     return fileContent;
 }
 
-VMResult executeModule(VM* vm, Value moduleName, const char* moduleCode)
+VMResult executeModule(VM *vm, Value moduleName, const char *moduleCode)
 {
     return VM_RESULT_ERROR;
 }
 
-void buildCore(VM* vm)
+void buildCore(VM *vm)
 {
     // 创建核心模块, 将其加入到vm->allModules中
-    ObjModule* coreModule = newObjModule(vm, NULL);
+    ObjModule *coreModule = newObjModule(vm, NULL);
     mapSet(vm, vm->allModules, CORE_MODULE, OBJ_TO_VALUE(coreModule));
+}
+
+
+// table中查找符号symbol, 找到后返回索引,否则返回-1.
+int getIndexFromSymbolTable(SymbolTable *table, const char *symbol, uint32_t length)
+{
+    ASSERT(length != 0, "length of symbol is 0!");
+
+    for (uint32_t idx = 0; idx < table->count; idx++)
+    {
+        if (length == table->datas[idx].length &&
+            memcmp(table->datas[idx].str, symbol, length) == 0)
+        {
+            return idx;
+        }
+    }
+
+    return -1;
+}
+
+// 往table中添加符号symbol,返回其索引
+int addSymbol(VM *vm, SymbolTable *table, const char *symbol, uint32_t length)
+{
+    ASSERT(length != 0, "length of symbol is 0!");
+
+    String string;
+    string.str = ALLOCATE_ARRAY(vm, char, length + 1);
+
+    memcpy(string.str, symbol, length);
+
+    string.str[length] = '\0';
+    string.length = length;
+    StringBufferAdd(vm, table, string);
+
+    return table->count - 1;
 }
