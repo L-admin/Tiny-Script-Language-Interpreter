@@ -5,10 +5,14 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <stdio.h>
+#include "obj_map.h"
+#include "meta_obj.h"
 #include "core.h"
 #include "utils.h"
 
 char *rootDir = NULL;
+
+#define CORE_MODULE VT_TO_VALUE(VT_NULL)
 
 char *readFile(const char *path)
 {
@@ -38,4 +42,16 @@ char *readFile(const char *path)
     fclose(file);
 
     return fileContent;
+}
+
+VMResult executeModule(VM* vm, Value moduleName, const char* moduleCode)
+{
+    return VM_RESULT_ERROR;
+}
+
+void buildCore(VM* vm)
+{
+    // 创建核心模块, 将其加入到vm->allModules中
+    ObjModule* coreModule = newObjModule(vm, NULL);
+    mapSet(vm, vm->allModules, CORE_MODULE, OBJ_TO_VALUE(coreModule));
 }

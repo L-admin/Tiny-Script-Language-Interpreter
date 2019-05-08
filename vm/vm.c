@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include "utils.h"
 #include "vm.h"
+#include "core.h"
 
 
 void initVM(VM *vm)
@@ -13,6 +14,7 @@ void initVM(VM *vm)
     vm->curParser = NULL;
     vm->allocatedBytes = 0;
     vm->allObjects = NULL;
+    vm->allModules = newObjMap(vm);
 }
 
 VM *newVM()
@@ -24,5 +26,6 @@ VM *newVM()
     }
 
     initVM(vm);
+    buildCore(vm);
     return vm;
 }

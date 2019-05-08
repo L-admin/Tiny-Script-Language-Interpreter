@@ -62,6 +62,13 @@ typedef struct
 #define NUM_TO_VALUE(num) ((Value){VT_NUM, {num}})
 #define VALUE_TO_NUM(value) value.num
 
+#define OBJ_TO_VALUE(objPtr) ({ \
+   Value value; \
+   value.type = VT_OBJ; \
+   value.objHeader = (ObjHeader*)(objPtr); \
+   value; \
+})
+
 #define VALUE_IS_UNDEFINED(value) ((value).type == VT_UNDEFINED)
 #define VALUE_IS_NULL(value) ((value).type == VT_NULL)
 #define VALUE_IS_TRUE(value) ((value).type == VT_TRUE)
