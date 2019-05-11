@@ -55,28 +55,23 @@ typedef struct
     };
 } Value;
 
-#define VT_TO_VALUE(vt) ((Value){vt, {0}})
-#define BOOL_TO_VALUE(boolean) (boolean ? VT_TO_VALUE(VT_TRUE) : VT_TO_VALUE(VT_FALSE))
-#define VALUE_TO_BOOL(value) ((value).type == VT_TRUE ? true : false)
 
-#define NUM_TO_VALUE(num) ((Value){VT_NUM, {num}})
-#define VALUE_TO_NUM(value) value.num
+Value ValueTypeToValue(ValueType vt_type);
+Value BoolToValue(bool boolean);
+bool ValueToBool(Value value);
+Value NumToValue(double num);
+double ValueToNum(Value value);
+Value ObjToValue(ObjHeader* objPtr);
+ObjHeader* ValueToObj(Value value);
 
-#define OBJ_TO_VALUE(objPtr) ({ \
-   Value value; \
-   value.type = VT_OBJ; \
-   value.objHeader = (ObjHeader*)(objPtr); \
-   value; \
-})
+bool IsValueUndefined(Value value);
+bool IsValueTrue(Value value);
+bool IsValueFalse(Value value);
+bool IsValueNum(Value value);
+bool IsValueObj(Value value);
 
-#define VALUE_IS_UNDEFINED(value) ((value).type == VT_UNDEFINED)
-#define VALUE_IS_NULL(value) ((value).type == VT_NULL)
-#define VALUE_IS_TRUE(value) ((value).type == VT_TRUE)
-#define VALUE_IS_FALSE(value) ((value).type == VT_FALSE)
-#define VALUE_IS_NUM(value) ((value).type == VT_NUM)
-#define VALUE_IS_OBJ(value) ((value).type == VT_OBJ)
 
-#define VALUE_TO_OBJ(value) (value.objHeader)
+
 
 typedef struct
 {

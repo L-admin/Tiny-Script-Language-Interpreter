@@ -73,11 +73,10 @@ int defineModuleVar(VM *vm, ObjModule *objModule,
         ValueBufferAdd(vm, &objModule->moduleVarValue, value);
 
     }
-    else if (VALUE_IS_NUM(objModule->moduleVarValue.datas[symbolIndex]))
+    else if (IsValueNum(objModule->moduleVarValue.datas[symbolIndex]))
     {
         //若遇到之前预先声明的模块变量的定义,在此为其赋予正确的值
         objModule->moduleVarValue.datas[symbolIndex] = value;
-
     }
     else
     {

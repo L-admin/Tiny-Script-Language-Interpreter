@@ -92,7 +92,7 @@ ObjUpvalue *newObjUpvalue(VM *vm, Value *localVarPtr)
     ObjUpvalue* objUpvalue = ALLOCATE(vm, ObjUpvalue);
     initObjHeader(vm, &objUpvalue->objHeader, OT_UPVALUE, NULL);
     objUpvalue->localVarPtr = localVarPtr;
-    objUpvalue->closedUpvalue = VT_TO_VALUE(VT_NULL);
+    objUpvalue->closedUpvalue = ValueTypeToValue(VT_NULL);
     objUpvalue->next = NULL;
     return objUpvalue;
 }

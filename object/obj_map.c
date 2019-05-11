@@ -105,8 +105,8 @@ static void resizeMap(VM *vm, ObjMap *objMap, uint32_t newCapacity)
     Entry *newEntries = ALLOCATE_ARRAY(vm, Entry, newCapacity);
     for (uint32_t idx = 0; idx < newCapacity; idx++)
     {
-        newEntries[idx].key =  VT_TO_VALUE(VT_UNDEFINED);
-        newEntries[idx].value = VT_TO_VALUE(VT_FALSE);
+        newEntries[idx].key = ValueTypeToValue(VT_UNDEFINED);
+        newEntries[idx].value = ValueTypeToValue(VT_FALSE);
     }
 
     // 2. 再遍历老的数组,把有值的部分插入到新数组
@@ -161,7 +161,7 @@ Value mapGet(ObjMap *objMap, Value key)
     Entry *entry = findEntry(objMap, key);
     if (entry == NULL)
     {
-        return VT_TO_VALUE(VT_UNDEFINED);
+        return ValueTypeToValue(VT_UNDEFINED);
     }
     return entry->value;
 }
@@ -186,7 +186,7 @@ static Entry *findEntry(ObjMap *objMap, Value key)
         }
         // key为VT_UNDEFINED且value为VT_TRUE表示探测链未断,可继续探测.
         // key为VT_UNDEFINED且value为VT_FALSE表示探测链结束,探测结束.
-        if (VALUE_IS_UNDEFINED(entry->key) && VALUE_IS_FALSE(entry->value))
+        if (IsValueUndefined(entry->key) && IsValueFalse(entry->value))
         {
             return NULL;    // 未找到
         }
@@ -210,13 +210,13 @@ Value removeKey(VM *vm, ObjMap *objMap, Value key)
 
     if (entry == NULL)
     {
-        return VT_TO_VALUE(VT_NULL);
+        return ValueTypeToValue(VT_NULL);
     }
 
     // 设置开放定址的伪删除
     Value value = entry->value;
-    entry->key = VT_TO_VALUE(VT_UNDEFINED);
-    entry->value = VT_TO_VALUE(VT_TRUE);   //值为真,伪删除
+    entry->key = ValueTypeToValue(VT_UNDEFINED);
+    entry->value = ValueTypeToValue(VT_TRUE);   //值为真,伪删除
 
     objMap->count--;
     if (objMap->count == 0)

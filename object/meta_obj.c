@@ -82,7 +82,7 @@ ObjInstance *newObjInstance(VM *vm, Class *class)
     // 初始化field为NULL.
     for (uint32_t idx = 0; idx < class->fieldNum; idx++)
     {
-        objInstance->fields[idx] = VT_TO_VALUE(VT_NULL);
+        objInstance->fields[idx] = ValueTypeToValue(VT_NULL);
     }
 
     return objInstance;

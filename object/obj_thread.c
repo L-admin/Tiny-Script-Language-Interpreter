@@ -24,7 +24,7 @@ void resetThread(ObjThread* objThread, ObjClosure*  objClosure)
     objThread->esp = objThread->stack;
     objThread->openUpvalues = NULL;
     objThread->caller = NULL;
-    objThread->errorObj = VT_TO_VALUE(VT_NULL);
+    objThread->errorObj = ValueTypeToValue(VT_NULL);
     objThread->usedFrameNum = 0;
 
     ASSERT(objClosure != NULL, "objClosure is NULL in function resetThread");

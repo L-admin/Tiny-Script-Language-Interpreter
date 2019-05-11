@@ -82,7 +82,7 @@ inline Class *getClassOfObj(VM *vm, Value object)
         case VT_NUM:
             return vm->numClass;
         case VT_OBJ:
-            return VALUE_TO_OBJ(object)->class;
+            return ValueToObj(object)->class;
         default:
             NOT_REACHED();
     }

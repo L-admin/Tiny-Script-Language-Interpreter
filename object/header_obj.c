@@ -6,6 +6,79 @@
 #include "header_obj.h"
 #include "utils.h"
 
+inline Value ValueTypeToValue(ValueType vt_type)
+{
+    Value value = {vt_type, 0};
+    return value;
+}
+
+
+inline Value BoolToValue(bool boolean)
+{
+
+    Value value = boolean ? ValueTypeToValue(VT_TRUE) : ValueTypeToValue(VT_FALSE);
+    return value;
+}
+
+inline bool ValueToBool(Value value)
+{
+    return value.type == VT_TRUE ? true : false;
+}
+
+
+inline Value NumToValue(double num)
+{
+    Value value = {VT_NUM, num};
+    return value;
+}
+
+inline double ValueToNum(Value value)
+{
+    return value.num;
+}
+
+
+inline Value ObjToValue(ObjHeader* objPtr)
+{
+    Value value;
+    value.type = VT_OBJ;
+    value.objHeader = objPtr;
+
+    return value;
+}
+
+inline ObjHeader* ValueToObj(Value value)
+{
+    return value.objHeader;
+}
+
+
+inline bool IsValueUndefined(Value value)
+{
+    return value.type == VT_UNDEFINED;
+}
+
+inline bool IsValueTrue(Value value)
+{
+    return value.type == VT_TRUE;
+}
+
+inline bool IsValueFalse(Value value)
+{
+    return value.type == VT_FALSE;
+}
+
+inline bool IsValueNum(Value value)
+{
+    return value.type == VT_NUM;
+}
+
+inline bool IsValueObj(Value value)
+{
+    return value.type == VT_OBJ;
+}
+
+
 void ValueBufferInit(ValueBuffer *buf)
 {
     buf->datas = NULL;
