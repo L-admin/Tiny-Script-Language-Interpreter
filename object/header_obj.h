@@ -64,12 +64,14 @@ double ValueToNum(Value value);
 Value ObjToValue(ObjHeader* objPtr);
 ObjHeader* ValueToObj(Value value);
 
+Class* ValueToClass(Value value);
+
 bool IsValueUndefined(Value value);
 bool IsValueTrue(Value value);
 bool IsValueFalse(Value value);
 bool IsValueNum(Value value);
 bool IsValueObj(Value value);
-
+bool IsValueClass(Value value);
 
 
 

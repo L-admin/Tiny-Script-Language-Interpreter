@@ -52,6 +52,11 @@ inline ObjHeader* ValueToObj(Value value)
     return value.objHeader;
 }
 
+Class* ValueToClass(Value value)
+{
+    return (Class*)ValueToObj(value);
+}
+
 
 inline bool IsValueUndefined(Value value)
 {
@@ -76,6 +81,11 @@ inline bool IsValueNum(Value value)
 inline bool IsValueObj(Value value)
 {
     return value.type == VT_OBJ;
+}
+
+inline bool IsValueClass(Value value)
+{
+    return IsValueObj(value) && ValueToObj(value)->type == OT_CLASS;
 }
 
 
