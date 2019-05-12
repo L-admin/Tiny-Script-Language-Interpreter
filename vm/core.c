@@ -89,9 +89,9 @@ static bool primObjectIs(VM* vm, Value* args)
     }
 
     Class* thisClass = getClassOfObj(vm, args[0]);
-    Class* baseClass = (Class*)(args[1].objHeader);
+    Class* baseClass = (Class*)(args[1].objHeader);     // TODO: ?
 
-    // 有可能是多级继承, 因此自上而下便利基类链表
+    // 有可能是多级继承, 因此自上而下遍历基类链表
     while(baseClass != NULL)
     {
         if (thisClass == baseClass)
@@ -119,7 +119,7 @@ static bool primObjectToString(VM* vm UNUSED, Value* args)
 // args[0].type: 返回对象args[0]的类
 static bool primObjectType(VM* vm, Value* args)
 {
-    Class* class = getClassOfObj(vm, args[0]);
+    Class* class = getClassOfObj(vm, args[0]);  // ValueToObj(args[0])->class;
     args[0] = ObjToValue((ObjHeader*)class);
     return true;
 }
@@ -262,7 +262,6 @@ void buildCore(VM *vm)
 
     // 定义classOfClass类, 它是所有meta类的meta类和基类
     vm->classOfClass = defineClass(vm, coreModule, "class");
-
     // objectClass 是任何类的基类
     bindSuperClass(vm, vm->classOfClass, vm->objectClass);
 
