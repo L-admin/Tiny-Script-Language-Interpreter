@@ -13,49 +13,25 @@
 #include "core.h"
 #include "utils.h"
 
-// 返回值类型是Value类型,且是放在args[0], args是Value数组
-// RET_VALUE的参数就是Value类型,无须转换直接赋值.
-// 它是后面"RET_其它类型"的基础
-
 
 char *rootDir = NULL;
 
-// 读取源码文件
-char *readFile(const char *path)
-{
-    FILE *file = fopen(path, "rb"); // TODO: r 和 rb 区别
-    if (file == NULL)
-    {
-        IO_ERROR("Could`t open file \"%s\".\n", path);
-    }
+static bool primObjectNot(VM* vm UNUSED, Value* args);
+static bool primObjectEqual(VM* vm UNUSED, Value* args);
+static bool primObjectNotEqual(VM* vm UNUSED, Value* args);
+static bool primObjectIs(VM* vm, Value* args);
+static bool primObjectToString(VM* vm UNUSED, Value* args);
+static bool primObjectType(VM* vm, Value* args);
+static bool primClassName(VM* vm UNUSED, Value* args);
+static bool primClassSupertype(VM* vm UNUSED, Value* args);
+static bool primClassToString(VM* vm UNUSED, Value* args);
+static bool primObjectmetaSame(VM* vm UNUSED, Value* args);
 
-    struct stat fileStat;
-    stat(path, &fileStat);
-    size_t fileSize = (size_t) fileStat.st_size;
+static Class* defineClass(VM* vm, ObjModule* objModule, const char* name);
+static void primMethodBind(VM* vm, Class* classPtr, const char* methodName, Primitive func);
 
-    char *fileContent = (char *) malloc(fileSize + 1);
-    if (fileContent == NULL)
-    {
-        MEM_ERROR("Could`t allocate memory for reading file \"%s\".\n", path);
-    }
-
-    size_t numRead = fread(fileContent, sizeof(char), fileSize, file);
-    if (numRead < fileSize)
-    {
-        IO_ERROR("Could`t read file \"%s\".\n", path);
-    }
-    fileContent[fileSize] = '\0';
-
-    fclose(file);
-
-    return fileContent;
-}
-
-VMResult executeModule(VM *vm, Value moduleName, const char *moduleCode)
-{
-    return VM_RESULT_ERROR;
-}
-
+static ObjModule* getModule(VM* vm, Value moduleName);
+static ObjThread* loadModule(VM* vm, Value moduleName, const char* moduleCode);
 
 // !object: object取反, 结果返回false
 static bool primObjectNot(VM* vm UNUSED, Value* args)
@@ -325,3 +301,41 @@ static ObjThread* loadModule(VM* vm, Value moduleName, const char* moduleCode)
     return moduleThread;
 }
 
+
+// 读取源码文件
+char *readFile(const char *path)
+{
+    FILE *file = fopen(path, "rb"); // TODO: r 和 rb 区别
+    if (file == NULL)
+    {
+        IO_ERROR("Could`t open file \"%s\".\n", path);
+    }
+
+    struct stat fileStat;
+    stat(path, &fileStat);
+    size_t fileSize = (size_t) fileStat.st_size;
+
+    char *fileContent = (char *) malloc(fileSize + 1);
+    if (fileContent == NULL)
+    {
+        MEM_ERROR("Could`t allocate memory for reading file \"%s\".\n", path);
+    }
+
+    size_t numRead = fread(fileContent, sizeof(char), fileSize, file);
+    if (numRead < fileSize)
+    {
+        IO_ERROR("Could`t read file \"%s\".\n", path);
+    }
+    fileContent[fileSize] = '\0';
+
+    fclose(file);
+
+    return fileContent;
+}
+
+
+VMResult executeModule(VM *vm, Value moduleName, const char *moduleCode)
+{
+    ObjThread* objThread = loadModule(vm, moduleName, moduleCode);
+    return VM_RESULT_ERROR;
+}

@@ -26,25 +26,14 @@ static void runFile(const char *path)
 
     const char *sourceCode = readFile(path);
 
+    fprintf(stdout, "\n------------------------\n");
     fprintf(stdout, "%s", sourceCode);
-    fprintf(stdout, "\n\n");
+    fprintf(stdout, "\n------------------------\n");
 
     VM *vm = newVM();
-    struct parser parser;
-    initParser(vm, &parser, path, sourceCode);
 
-#include "token.list"
-
-    while (parser.curToken.type != TOKEN_EOF)
-    {
-        getNextToken(&parser);
-        printf("%dL: %s [", parser.curToken.lineNo, tokenArray[parser.curToken.type]);
-        for (uint32_t idx = 0; idx < parser.curToken.length; idx++)
-        {
-            printf("%c", *(parser.curToken.start + idx));
-        }
-        printf("]\n");
-    }
+    ObjString* objString = newObjString(vm, path, (uint32_t)strlen(path));
+    executeModule(vm, ObjToValue((ObjHeader*)objString), sourceCode);
 }
 
 
