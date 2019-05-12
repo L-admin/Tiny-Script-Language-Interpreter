@@ -8,7 +8,7 @@
 
 inline Value ValueTypeToValue(ValueType vt_type)
 {
-    Value value = {vt_type, 0};
+    Value value = {vt_type, {0}};
     return value;
 }
 
@@ -53,7 +53,7 @@ inline ObjHeader* ValueToObj(Value value)
     return value.objHeader;
 }
 
-Class* ValueToClass(Value value)
+inline Class* ValueToClass(Value value)
 {
     return (Class*)ValueToObj(value);
 }
