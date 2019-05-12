@@ -22,6 +22,7 @@ typedef struct
     CharValue value;
 } ObjString;
 
+ObjString* ValueToObjString(Value value);
 
 uint32_t hashString(char *str, uint32_t length);
 

@@ -46,7 +46,7 @@ typedef struct
     Value fields[0];                // 具体的字段名(柔性数组)
 } ObjInstance;
 
-
+ObjModule* ValueToObjModule(Value value);
 ObjModule *newObjModule(VM *vm, const char *modName);
 ObjInstance *newObjInstance(VM *vm, Class *class);
 

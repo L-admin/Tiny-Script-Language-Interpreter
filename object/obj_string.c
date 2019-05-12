@@ -8,6 +8,11 @@
 #include "obj_string.h"
 
 
+inline ObjString* ValueToObjString(Value value)
+{
+    return (ObjString*)ValueToObj(value);
+}
+
 // fnv-1a算法
 uint32_t hashString(char* str, uint32_t length)
 {

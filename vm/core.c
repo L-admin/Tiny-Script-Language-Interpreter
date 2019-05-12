@@ -5,6 +5,7 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <stdio.h>
+#include "obj_thread.h"
 #include "compiler.h"
 #include "class.h"
 #include "obj_map.h"
@@ -281,3 +282,46 @@ void buildCore(VM *vm)
     objectMetaclass->objHeader.class = vm->classOfClass;
     vm->classOfClass->objHeader.class = vm->classOfClass; //元信息类回路,meta类终点
 }
+
+// 从modules中获取名为moduleName的模块
+static ObjModule* getModule(VM* vm, Value moduleName)
+{
+    Value value = mapGet(vm->allModules, moduleName);
+    if (value.type == VT_UNDEFINED)
+    {
+        return NULL;
+    }
+
+    return ValueToObjModule(value);
+}
+
+// 载入模块moduleName并编译
+static ObjThread* loadModule(VM* vm, Value moduleName, const char* moduleCode)
+{
+    // 先查看是否已经导入了该模块,避免重新导入
+    ObjModule* module = getModule(vm, moduleName);
+    if (module == NULL)
+    {
+        ObjString* modName = ValueToObjString(moduleName);
+        ASSERT(modName->value.start[modName->value.length] == '\0', "string.value.start is not terminated!");
+
+        module = newObjModule(vm, modName->value.start);
+        mapSet(vm ,vm->allModules, moduleName, ObjToValue((ObjHeader*)module));
+
+        // 继承核心模块中的变量
+        ObjModule* coreModule = getModule(vm, ValueTypeToValue(VT_NULL));
+        for (uint32_t idx = 0; idx < coreModule->moduleVarName.count; idx++)
+        {
+            defineModuleVar(vm, module,coreModule->moduleVarName.datas[idx].str,
+                            (uint32_t)strlen(coreModule->moduleVarName.datas[idx].str),
+                            coreModule->moduleVarValue.datas[idx]);
+        }
+    }
+
+    ObjFn* fn = compileModule(vm, module, moduleCode);
+    ObjClosure* objClosure = newObjClosure(vm, fn);
+    ObjThread* moduleThread = newObjThread(vm, objClosure);
+
+    return moduleThread;
+}
+

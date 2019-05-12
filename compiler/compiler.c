@@ -46,12 +46,12 @@ int defineModuleVar(VM *vm, ObjModule *objModule,
 {
     if (length > MAX_ID_LEN)
     {
-        //也许name指向的变量名并不以'\0'结束,将其从源码串中拷贝出来
+        // 也许name指向的变量名并不以'\0'结束,将其从源码串中拷贝出来
         char id[MAX_ID_LEN] = {'\0'};
         memcpy(id, name, length);
 
-        //本函数可能是在编译源码文件之前调用的,
-        //那时还没有创建parser, 因此报错要分情况:
+        // 本函数可能是在编译源码文件之前调用的,
+        // 那时还没有创建parser, 因此报错要分情况:
         if (vm->curParser != NULL)
         {   //编译源码文件
             COMPILE_ERROR(vm->curParser,
@@ -67,9 +67,9 @@ int defineModuleVar(VM *vm, ObjModule *objModule,
     int symbolIndex = getIndexFromSymbolTable(&objModule->moduleVarName, name, length);
     if (symbolIndex == -1)
     {
-        //添加变量名
+        // 添加变量名
         symbolIndex = addSymbol(vm, &objModule->moduleVarName, name, length);
-        //添加变量值
+        // 添加变量值
         ValueBufferAdd(vm, &objModule->moduleVarValue, value);
 
     }
@@ -84,6 +84,12 @@ int defineModuleVar(VM *vm, ObjModule *objModule,
     }
 
     return symbolIndex;
+}
+
+// 编译模块(目前是桩函数)
+ObjFn *compileModule(VM *vm, ObjModule *objModule, const char *moduleCode)
+{
+    ;
 }
 
 

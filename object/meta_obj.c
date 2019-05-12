@@ -47,6 +47,11 @@ void StringBufferClear(VM *vm, StringBuffer *buf)
     StringBufferInit(buf);
 }
 
+inline ObjModule* ValueToObjModule(Value value)
+{
+    return (ObjModule*)ValueToObj(value);
+}
+
 // 创建模块
 ObjModule *newObjModule(VM *vm, const char *modName)
 {
