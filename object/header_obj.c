@@ -49,6 +49,7 @@ inline Value ObjToValue(ObjHeader* objPtr)
 
 inline ObjHeader* ValueToObj(Value value)
 {
+    // TODO: 首先判断是否是对象？
     return value.objHeader;
 }
 
@@ -108,7 +109,7 @@ void ValueBufferFillWrite(VM *vm, ValueBuffer *buf, Value data, uint32_t fillCou
         size_t newSize = buf->capacity * sizeof(Value);
         ASSERT(newSize > oldSize, "faint...memory allocate!");
 
-        buf->datas = (Value *) memManager(vm, buf->datas, oldSize, newSize);
+        buf->datas = (Value *) memManager(vm, buf->datas, (uint32_t)oldSize, (uint32_t)newSize);
     }
 
     for (uint32_t cnt = 0; cnt < fillCount; cnt++)
@@ -125,7 +126,7 @@ void ValueBufferAdd(VM *vm, ValueBuffer *buf, Value data)
 void ValueBufferClear(VM *vm, ValueBuffer *buf)
 {
     size_t oldSize = buf->capacity * sizeof(buf->datas[0]);
-    memManager(vm, buf->datas, oldSize, 0);
+    memManager(vm, buf->datas, (uint32_t)oldSize, 0);
     ValueBufferInit(buf);
 }
 

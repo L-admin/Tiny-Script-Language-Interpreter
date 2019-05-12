@@ -65,7 +65,7 @@ ObjModule *newObjModule(VM *vm, const char *modName)
     objModule->name = NULL;
     if (modName != NULL)
     {
-        objModule->name = newObjString(vm, modName, strlen(modName));
+        objModule->name = newObjString(vm, modName, (uint32_t)(strlen(modName)));
     }
 
     return objModule;

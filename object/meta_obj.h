@@ -35,7 +35,7 @@ typedef struct
     ObjHeader objHeader;
     SymbolTable moduleVarName;      // 模块中的模块变量名
     ValueBuffer moduleVarValue;     // 模块中的模块变量值
-    ObjString *name;                // 模块中的模块变量值
+    ObjString *name;                // 模块名
 } ObjModule;
 
 

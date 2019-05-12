@@ -9,6 +9,11 @@
 ObjRange *newObjRange(VM *vm, int from, int to)
 {
     ObjRange* objRange = ALLOCATE(vm, ObjRange);
+    if (objRange == NULL)
+    {
+        MEM_ERROR("allocate ObjRange failed!");
+    }
+
     initObjHeader(vm, &objRange->objHeader, OT_RANGE, vm->rangeClass);
     objRange->from = from;
     objRange->to = to;
