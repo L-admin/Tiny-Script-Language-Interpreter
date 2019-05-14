@@ -186,7 +186,7 @@ static Class* defineClass(VM* vm, ObjModule* objModule, const char* name)
 
 void bindMethod(VM* vm, Class* class, uint32_t index, Method method)
 {
-    if (index > class->methods.count)
+    if (index >= class->methods.count)
     {
         Method emptyPad = {MT_NONE, {0}};
         MethodBufferFillWrite(vm, &class->methods, emptyPad, index - class->methods.count + 1);
