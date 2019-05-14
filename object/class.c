@@ -9,6 +9,11 @@
 
 bool valueIsEqual(Value a, Value b)
 {
+    if (a.type == VT_NULL && b.type == VT_NULL)
+    {
+        return true;
+    }
+
     // 类型不同则无需进行后面比较
     if (a.type != b.type)
     {

@@ -27,6 +27,6 @@ VM *newVM()
     }
 
     initVM(vm);
-    buildCore(vm);
+    buildCore(vm);  // 创建核心模块
     return vm;
 }

@@ -36,7 +36,7 @@ struct vm
     Parser *curParser;              // 当前词法分析器
     uint32_t allocatedBytes;        // 累计已分配的内存大小
     ObjHeader *allObjects;          // 跟踪已经分配对象的链表
-    ObjMap* allModules;             // 记录所有已加载的模块
+    ObjMap* allModules;             // 记录所有已加载的模块<模块名，模块对象>
     SymbolTable allMethodNames;     // (所有)类的方法名
 };
 
