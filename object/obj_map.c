@@ -20,6 +20,11 @@ static Entry *findEntry(ObjMap *objMap, Value key);
 ObjMap *newObjMap(VM *vm)
 {
     ObjMap *objMap = ALLOCATE(vm, ObjMap);
+    if (objMap == NULL)
+    {
+        MEM_ERROR("Allocating ObjString failed!");
+    }
+
     initObjHeader(vm, &objMap->objHeader, OT_MAP, vm->mapClass);
     objMap->capacity = objMap->count = 0;
     objMap->entries = NULL;
@@ -44,7 +49,7 @@ static uint32_t hashObj(ObjHeader *objHeader)
                               ((Class *) objHeader)->name->value.length);
         case OT_RANGE:
         {
-            // 计算range对象哈希码
+            // 计算range对象哈希值
             ObjRange *objRange = (ObjRange *) objHeader;
             return hashNum(objRange->from) ^ hashNum(objRange->to);
         }
@@ -89,6 +94,7 @@ void mapSet(VM *vm, ObjMap *objMap, Value key, Value value)
         {
             newCapacity = MIN_CAPACITY;
         }
+
         resizeMap(vm, objMap, newCapacity);
     }
 
@@ -216,7 +222,7 @@ Value removeKey(VM *vm, ObjMap *objMap, Value key)
     // 设置开放定址的伪删除
     Value value = entry->value;
     entry->key = ValueTypeToValue(VT_UNDEFINED);
-    entry->value = ValueTypeToValue(VT_TRUE);   //值为真,伪删除
+    entry->value = ValueTypeToValue(VT_TRUE);   // 值为真,伪删除
 
     objMap->count--;
     if (objMap->count == 0)
@@ -226,7 +232,8 @@ Value removeKey(VM *vm, ObjMap *objMap, Value key)
     }
     else if (objMap->count < objMap->capacity / (MAP_CAPACITY_GROW_FACTOR) * MAP_LOAD_PERCENT &&
              objMap->count > MIN_CAPACITY)
-    {   //若map容量利用率太低,就缩小map空间
+    {
+        // 若map容量利用率太低,就缩小map空间
         uint32_t newCapacity = objMap->capacity / MAP_CAPACITY_GROW_FACTOR;
         if (newCapacity < MIN_CAPACITY)
         {

@@ -33,8 +33,8 @@ typedef struct
 typedef struct
 {
     ObjHeader objHeader;
-    uint32_t capacity;          // Entry的容量，包括已经使用和未使用
     uint32_t count;             // map中使用的Entry的数量
+    uint32_t capacity;          // Entry的容量，包括已经使用和未使用
     Entry *entries;             // Entry数组
 } ObjMap;
 
