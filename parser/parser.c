@@ -350,7 +350,8 @@ void getNextToken(Parser *parser)
 }
 
 //
-void initParser(VM *vm, Parser *parser, const char *file, const char *sourceCode)
+void initParser(VM *vm, Parser *parser, const char *file,
+                const char *sourceCode, ObjModule *objModule)
 {
     parser->file = file;
     parser->sourceCode = sourceCode;
@@ -368,4 +369,16 @@ void initParser(VM *vm, Parser *parser, const char *file, const char *sourceCode
 
     parser->interpolationExpectRightParenNum = 0;
     parser->vm = vm;
+
+    parser->curModule = objModule;
+}
+
+bool matchToken(Parser *parser, TokenType expected)
+{
+    if (parser->curToken.type == expected)
+    {
+        getNextToken(parser);
+        return true;
+    }
+    return false;
 }

@@ -6,6 +6,7 @@
 #define SPARROW_PARSER_H
 
 #include <stdint.h>
+#include "compiler.h"
 #include "common.h"
 
 
@@ -14,13 +15,13 @@ typedef enum
     TOKEN_UNKNOWN,
 
     // 数据类型
-    TOKEN_NUM,              // 数字
+            TOKEN_NUM,              // 数字
     TOKEN_STRING,           // 字符串
     TOKEN_ID,               // 变量
     TOKEN_INTERPOLATION,    // 内嵌表达式
 
     // 关键字
-    TOKEN_VAR,              // var
+            TOKEN_VAR,              // var
     TOKEN_FUN,              // fun
     TOKEN_IF,               // if
     TOKEN_ELSE,             // else
@@ -34,7 +35,7 @@ typedef enum
     TOKEN_NULL,             // null
 
     // 类和模块导入
-    TOKEN_CLASS,            // class
+            TOKEN_CLASS,            // class
     TOKEN_THIS,             // this
     TOKEN_STATIC,           // static
     TOKEN_IS,               // is
@@ -42,7 +43,7 @@ typedef enum
     TOKEN_IMPORT,           // import
 
     // 分隔符
-    TOKEN_COMMA,            // ,
+            TOKEN_COMMA,            // ,
     TOKEN_COLON,            // :
     TOKEN_LEFT_PAREN,       // (
     TOKEN_RIGHT_PAREN,      // )
@@ -54,29 +55,29 @@ typedef enum
     TOKEN_DOT_DOT,          // ..
 
     // 简单双目运算符
-    TOKEN_ADD,              // +
+            TOKEN_ADD,              // +
     TOKEN_SUB,              // -
     TOKEN_MUL,              // *
     TOKEN_DIV,              // /
     TOKEN_MOD,              // %
 
     // 赋值运算符
-    TOKEN_ASSIGN,           // =
+            TOKEN_ASSIGN,           // =
 
     // 位运算符
-    TOKEN_BIT_AND,          // &
+            TOKEN_BIT_AND,          // &
     TOKEN_BIT_OR,           // |
     TOKEN_BIT_NOT,          // ~
     TOKEN_BIT_SHIFT_RIGHT,  // >>
     TOKEN_BIT_SHIFT_LEFT,   // <<
 
     // 逻辑运算符
-    TOKEN_LOGIC_AND,        // &&
+            TOKEN_LOGIC_AND,        // &&
     TOKEN_LOGIC_OR,         // ||
     TOKEN_LOGIC_NOT,        // !
 
     // 关系操作符
-    TOKEN_EQUAL,            // ==
+            TOKEN_EQUAL,            // ==
     TOKEN_NOT_EQUAL,        // !=
     TOKEN_GREATE,           // >
     TOKEN_GREATE_EQUAL,     // >=
@@ -86,7 +87,7 @@ typedef enum
     TOKEN_QUESTION,         // ?
 
     // 文件结束标记
-    TOKEN_EOF               // EOF
+            TOKEN_EOF               // EOF
 } TokenType;
 
 
@@ -110,6 +111,9 @@ struct parser
     Token preToken;
     Token curToken;
 
+    ObjModule *curModule;    // 当前正在编译的模块
+    CompileUnit *curCompileUnit;   // 当前编译单元
+
     int interpolationExpectRightParenNum;   // 处于内嵌表达式之中时,期望的右括号数量(跟踪小括号对儿的嵌套)
 
     struct parser *parent;      // 指向父parser
@@ -120,7 +124,8 @@ struct parser
 
 void getNextToken(Parser *parser);
 
-void initParser(VM *vm, Parser *parser, const char *file, const char *sourceCode);
-
+void initParser(VM *vm, Parser *parser, const char *file,
+                const char *sourceCode, ObjModule *objModule);
+bool matchToken(Parser* parser, TokenType expected);
 
 #endif //SPARROW_PARSER_H

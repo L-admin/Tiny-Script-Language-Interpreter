@@ -42,7 +42,7 @@ typedef struct
 
     // 表示本函数中的局部变量是否是其内层函数所引用的upvalue,
     // 当其内层函数引用此变量时,由其内层函数来设置此项为true.
-    bool isUpValue;
+    bool isUpvalue;
 } LocalVar;
 
 
